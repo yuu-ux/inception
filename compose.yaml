@@ -1,0 +1,14 @@
+services:
+  web:
+    container_name: nginx
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - '443:443'
+    networks:
+      - inception_net
+
+networks:
+  inception_net:
+    driver: bridge
