@@ -1,3 +1,5 @@
 all: up
+ps:
+	cd srcs && docker compose ps
 up:
-	docker compose up -d
+	cd srcs && docker compose up -d

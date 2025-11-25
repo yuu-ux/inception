@@ -2,7 +2,7 @@ services:
   web:
     container_name: nginx
     build:
-      context: ./web
+      context: ./requirements/nginx
       dockerfile: Dockerfile
     ports:
       - '443:443'
