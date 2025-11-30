@@ -1,14 +1,40 @@
 services:
-  web:
-    container_name: nginx
+  nginx:
     build:
       context: ./requirements/nginx
-      dockerfile: Dockerfile
     ports:
       - '443:443'
     networks:
       - inception_net
+    depends_on:
+      wordpress:
+        condition: service_healthy
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+    networks:
+      - inception_net
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inception_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 networks:
   inception_net:
     driver: bridge
+
+volumes:
+  mariadb_data:

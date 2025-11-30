@@ -1,8 +1,19 @@
 FROM debian:bookworm
-RUN apt-get update && apt-get install -y nginx openssl && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+    apt-get install -y nginx openssl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /etc/ssl/certs
-RUN openssl genrsa -out inception.key 2048
-RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout inception.key -out inception.crt -subj "/CN=localhost"
-RUN chmod 400 inception.crt
+
+RUN mkdir -p /etc/ssl/certs && \
+    openssl req -x509 -nodes -newkey rsa:2048 \
+    -keyout /etc/ssl/certs/inception.key \
+    -out /etc/ssl/certs/inception.crt \
+    -subj "/CN=localhost" && \
+    chmod 400 /etc/ssl/certs/inception.key
+
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
+
 CMD ["nginx", "-g", "daemon off;"]
