@@ -7,8 +7,7 @@ services:
     networks:
       - inception_net
     depends_on:
-      wordpress:
-        condition: service_healthy
+      - wordpress
 
   wordpress:
     build:

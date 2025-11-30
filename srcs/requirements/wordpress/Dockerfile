@@ -13,4 +13,4 @@ RUN set -eux; unzip /tmp/wordpress-6.8.3-ja.zip -d /var/www/ && \
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
-CMD ["php-fpm", "-F"]
+CMD ["php-fpm8.2", "-F"]
