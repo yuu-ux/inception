@@ -7,7 +7,7 @@ RUN apt-get update && \
 
 RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
 
-COPY ./conf/my.conf /etc/my.conf
+COPY ./conf/my.cnf /etc/my.cnf
 
 COPY ./conf/init.sql /docker-entrypoint-initdb.d/init.sql
 
