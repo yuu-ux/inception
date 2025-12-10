@@ -9,8 +9,8 @@ if [ ! -e wp-includes/version.php ]; then
   chown -R www-data:www-data /var/www/html
 fi
 
-echo "[entrypoint] Waiting for MariaDB..."
 
+echo "[entrypoint] Waiting for MariaDB..."
 until mysqladmin ping \
   --protocol=TCP \
   -h "$WP_DB_HOST" \
@@ -23,7 +23,6 @@ done
 
 if [ ! -f wp-config.php ]; then
   echo "[entrypoint] Creating wp-config.php..."
-
   wp config create \
     --dbname="$WP_DB_NAME" \
     --dbuser="$WP_DB_USER" \
@@ -34,13 +33,12 @@ fi
 
 if ! wp core is-installed --allow-root; then
   echo "[entrypoint] Installing WordPress and creating admin user..."
-
   wp core install \
     --url="https://localhost" \
     --title="Inception WordPress" \
-    --admin_user="manager" \
-    --admin_password="managerpass" \
-    --admin_email="manager@example.com" \
+    --admin_user="$WP_ADMIN_USER" \
+    --admin_password="$WP_ADMIN_PASSWORD" \
+    --admin_email="$WP_ADMIN_EMAIL" \
     --skip-email \
     --allow-root
 fi
@@ -48,9 +46,9 @@ fi
 if ! wp user get seconduser --allow-root >/dev/null 2>&1; then
   echo "[entrypoint] Creating second WordPress user..."
 
-  wp user create seconduser second@example.com \
+  wp user create $WP_SECOND_USER $WP_SECOND_EMAIL \
     --role=subscriber \
-    --user_pass="secondpass" \
+    --user_pass="$WP_SECOND_PASSWORD" \
     --allow-root
 fi
 

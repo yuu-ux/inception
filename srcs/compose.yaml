@@ -34,6 +34,12 @@ services:
       WP_DB_NAME: ${DB_NAME}
       WP_DB_USER: ${DB_USER}
       WP_DB_PASSWORD: ${DB_PASSWORD}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+      WP_SECOND_USER: ${WP_SECOND_USER}
+      WP_SECOND_EMAIL: ${WP_SECOND_EMAIL}
+      WP_SECOND_PASSWORD: ${WP_SECOND_PASSWORD}
 
   mariadb:
     container_name: mariadb
