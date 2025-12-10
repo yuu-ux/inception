@@ -29,6 +29,11 @@ services:
     volumes:
       - wp_data:/var/www/html
     restart: on-failure
+    environment:
+      WP_DB_HOST: ${DB_HOST}
+      WP_DB_NAME: ${DB_NAME}
+      WP_DB_USER: ${DB_USER}
+      WP_DB_PASSWORD: ${DB_PASSWORD}
 
   mariadb:
     container_name: mariadb
@@ -46,6 +51,11 @@ services:
       timeout: 5s
       retries: 10
     restart: on-failure
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
 
 networks:
   inception_net:

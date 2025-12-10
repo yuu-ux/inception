@@ -5,12 +5,12 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
+COPY ./conf/my.cnf /etc/mysql/my.cnf
 
-COPY ./conf/my.cnf /etc/my.cnf
-
-COPY ./conf/init.sql /docker-entrypoint-initdb.d/init.sql
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 3306
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["mysqld_safe"]
